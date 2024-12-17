@@ -1,10 +1,10 @@
 import './LoginPage.css';
-
 import { useState } from 'react';
 import { LoginApi } from '../services/Api';
 import {storeUserData } from '../services/Storage'
 import { isAuthenticated } from '../services/Auth';
 import { Link, Navigate } from 'react-router-dom';
+import Header from '../Header';
 
 
 export default function LoginPage (props){
@@ -64,6 +64,8 @@ export default function LoginPage (props){
         return <Navigate to="/dashboard" />
     }
     return (
+        <>
+        <Header /><br /> <br /><br />
             <section className="login-block">
                 <div className="container">
                 <nav style={{ }}className="navbar navbar-expand-md">
@@ -126,5 +128,7 @@ export default function LoginPage (props){
                     </div>
                 </div>
             </section>
+          
+            </>
     )
 }

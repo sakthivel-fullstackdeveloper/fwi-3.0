@@ -8,14 +8,38 @@ import './assets/vendor/glightbox/css/glightbox.min.css';
 import './assets/vendor/remixicon/remixicon.css';
 import './assets/vendor/swiper/swiper-bundle.min.css';
 import './assets/css/style.css';
+import { useEffect, useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import { UserDetailsApi } from "./services/Api";
+import { logout, isAuthenticated } from "./services/Auth";
 import { Link } from 'react-router-dom';
 
 
+function Header2() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ name: "", email: "", localId: "" });
+  useEffect(() => {
+      if (isAuthenticated()) {
+          UserDetailsApi().then((response) => {
+              setUser({
+                  name: response.data.users[0].displayName,
+                  email: response.data.users[0].email,
+                  localId: response.data.users[0].localId,
+              });
+          });
+      }
+  }, []);
 
+  const logoutUser = () => {
+      logout();
+      navigate("/login");
+  };
 
-
-function Header() {
- 
+  if (!isAuthenticated()) {
+      // Redirect user to login if not authenticated
+      return <Navigate to="/login" />;
+  }
 
   return (
     <>
@@ -34,7 +58,7 @@ function Header() {
               <li><a className="nav-link scrollto active" href="#hero">Home</a></li>
               <li><a className="nav-link scrollto" href="#services">Services</a></li>
               <li><a className="nav-link scrollto" href="#contact">Contact</a></li>
-              <li><Link to="/login" ><a className="nav-link scrollto">Login</a></Link></li>
+              <li><a className="nav-link scrollto" ><NavBar  logoutUser={logoutUser}  /></a></li>
               <li><a className="getstarted scrollto" href="#hero">Get Started</a></li>
             </ul>
             <i className="bi bi-list mobile-nav-toggle"></i>
@@ -46,4 +70,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Header2;

@@ -4,6 +4,7 @@ import { isAuthenticated } from '../services/Auth';
 import { storeUserData } from '../services/Storage';
 import './RegisterPage.css'
 import { Link, Navigate } from 'react-router-dom';
+import Header from '../Header';
 
 
 export default function RegisterPage(props){
@@ -68,6 +69,8 @@ export default function RegisterPage(props){
         return <Navigate to="/dashboard" />
     }    
     return (
+    
+        
             <section className="register-block">
                 <div className="container">
                 <nav style={{ }}className="navbar navbar-expand-md">
@@ -141,5 +144,6 @@ export default function RegisterPage(props){
                 </div>            
                 </div>
             </section>    
-        )
+ 
+        );
 }
